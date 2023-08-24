@@ -23,7 +23,7 @@ const columns = [ // a list of columns to be presented
   { id: "note", label: "Note", minWidth: 100 },
 ];
 
-const TableDisplay= ({ account, addToSelectedTransactions }) => {
+const TableDisplay= ({ account, addToAccumulatedAmount }) => {
 
   const [page, setPage] = useState(0); //page states
   const [rowsPerPage, setRowsPerPage] = useState(10); //sets the number of rows to be shown per page which is set as 10
@@ -32,16 +32,16 @@ const TableDisplay= ({ account, addToSelectedTransactions }) => {
 
   const handleChangePage = (event, newPage) => { 
     setPage(newPage);
-  }; //Changes the current pages of the table
+  };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
-  }; //sets the number of rows to show on table
+  };
 
-  const handleRowClick = (transaction) => {
-    addToSelectedTransactions(transaction) //parses the transaction to the addToSelectedTransactions located in the app.js
-  }; //runs when the row is clicked 
+  const handleRowClick = (amount) => {
+    addToAccumulatedAmount(amount)
+  };
 
   return (
 
@@ -49,7 +49,7 @@ const TableDisplay= ({ account, addToSelectedTransactions }) => {
       <TablePagination
         rowsPerPageOptions={[10]}
         component="div"
-        count={account.transactions && account.transactions.length >0 ? account.transactions.length : 0} //checks to make sure there is a transactions list existing
+        count={account.transactions && account.transactions.length >0 ? account.transactions.length : 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -64,7 +64,7 @@ const TableDisplay= ({ account, addToSelectedTransactions }) => {
               </TableCell>
             </TableRow>
             <TableRow>
-              {columns.map((column) => ( //maps the columns list to create table columns headers
+              {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
@@ -80,9 +80,8 @@ const TableDisplay= ({ account, addToSelectedTransactions }) => {
             {account.transactions
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
-                console.log(row)
                 return (
-                  <TableRow onClick={() => handleRowClick(row)} hover role="checkbox" tabIndex={-1} key={row.code} >
+                  <TableRow onClick={() => handleRowClick(row.amount)} hover role="checkbox" tabIndex={-1} key={row.code} >
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (

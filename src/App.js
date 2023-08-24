@@ -32,37 +32,32 @@ const initialAccountState = {
 function App() {
 
   const [selectedAccount, setSelectedAccount] = useState({...initialAccountState}); //sets the state to an empty state to make sure the object exists
-  const [selctedTransactions, setSelctedTransactions] = useState([]); // sets the state of the total amounts selected
+  const [accumulatedAmount, setAccumulatedAmount] = useState(0); // sets the state of the total amounts selected
   
-  const selectAccount = (accountNumber) =>{ 
+  const selectAccount = (accountNumber) =>{
     setSelectedAccount(accountNumber ? accountNumber : {...initialAccountState})
     accountNumber && setSelectedAccount(accountNumber) 
     console.log("setSelectedAccNumber", accountNumber)
-  } //Selects the account number within the json object
+  }
   
-  const addToSelectedTransactions = (transaction) => {
-    console.log("adding", selctedTransactions)
-    if (selctedTransactions.find(el => el.transactionId === transaction.transactionId)) {
-      return;
-    }
-    console.log("do setting")
-    setSelctedTransactions(current => [...current, transaction])
-  }// Selects the transactions and pushes the transaction id to the array of selected transactions
+  const addToAccumulatedAmount = (amount) =>{
+    setAccumulatedAmount(accumulatedAmount + amount)
+  }
 
   const unmatch = ()=>{
-    setSelctedTransactions(0)
-    console.log(selctedTransactions)
-  } //sets the selcted transaction amount sum to 0
+    setAccumulatedAmount(0)
+    console.log(accumulatedAmount)
+  }
 
-    console.log('app.js',selctedTransactions)
+    console.log('app.js',accumulatedAmount)
 
   return (
     <div className="App">
       <header className="header">CERTUS.</header>
       <div className="container">
         <main className="main">
-          <TableDisplay className="TableDisplay" account ={selectedAccount} addToSelectedTransactions={ addToSelectedTransactions }></TableDisplay>
-          <SelectedDataSession className="SelectedDataSession" selctedTransactions={selctedTransactions}></SelectedDataSession>
+          <TableDisplay className="TableDisplay" account ={selectedAccount} addToAccumulatedAmount ={ addToAccumulatedAmount }></TableDisplay>
+          <SelectedDataSession className="SelectedDataSession" accumulatedAmount={accumulatedAmount}></SelectedDataSession>
           <button onClick={ unmatch }>Unmatch</button>
         </main>
         <div className="sidebar">
