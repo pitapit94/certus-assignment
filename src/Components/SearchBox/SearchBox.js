@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import Accounts from '../../../Data/Accounts';
 
 const SearchBox = ({ selectAccount, accounts }) => {
     const [filteredAccount, setFilteredAccount] = useState([]);
@@ -9,11 +8,11 @@ const SearchBox = ({ selectAccount, accounts }) => {
             return account.accountNumber.includes(event.target.value)
         });
         setFilteredAccount(event.target.value.length > 0 ? acc : [])
-    }
+    } // onChange on the input will filter the object account (props) set it to the acc variable.
 
     const onSearch = () =>{
         selectAccount(...filteredAccount)
-    }
+    } // brings the object out of the list filteredAccount and runs the selectAccount function as its parameter when onClick is used. 
     
     return (
         <>
