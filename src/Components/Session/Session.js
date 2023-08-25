@@ -3,24 +3,24 @@ import './Session.css';
 
 const Session = ({account}) => {
 
-  const slicedTransactions = account.transactions && account.transactions.slice(0, 10);
+  const slicedTransactions = account.transactions && account.transactions.slice(0, 10); //sum only the amounts appearing on the page
 
-  const sumAmount = slicedTransactions.reduce((acc, transaction) => acc + transaction.amount, 0);
+  const sumAmount = account.transactions.reduce((acc, transaction) => acc + transaction.amount, 0); // sums the total amount
 
   const sumPositiveAmounts = slicedTransactions.reduce((acc, transaction) => {
       if (transaction.amount > 0) {
           return acc + transaction.amount;
       }
       return acc;
-  }, 0);
+  }, 0); // sums only the positive amount from the transactions amount.
 
   const sumNegativeAmounts = slicedTransactions.reduce((acc, transaction) => {
       if (transaction.amount < 0) {
           return acc + transaction.amount;
       }
       return acc;
-  }, 0);
-console.log(account.transactions&& account.transactions.length)
+  }, 0); //sums only the negative amount from the transactions amount.
+
   return (
       sumAmount !== 0 &&
       < div className="container">
