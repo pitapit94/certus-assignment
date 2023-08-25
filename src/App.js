@@ -21,7 +21,7 @@ const initialTransactionState = [
       branch: '',
       notes: ''
   }
-]
+] //list of an empty object to make sure undefined does not get sent to the searchbox component.
 
 const initialAccountState = {
   id: 0,
